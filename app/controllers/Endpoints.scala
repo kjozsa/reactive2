@@ -7,7 +7,9 @@ object Endpoints extends Controller {
 
   def boo(stuff: String) = Action {
     Ok(
-      Json.obj("result" -> s"stuff was $stuff")
+      Json.obj(
+        "result" -> s"stuff was $stuff"
+      )
     )
   }
 }
