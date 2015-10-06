@@ -5,9 +5,9 @@
         </encoder>
     </appender>
 
-    <logger name="net.liftweb" level="debug" />
+    <!--<logger name="akka" level="debug" />-->
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

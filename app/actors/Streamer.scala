@@ -6,7 +6,7 @@ class Streamer extends Actor with ActorLogging {
 
   def receive = {
     case message => {
-      log.info(s"received: $message")
+      context.system.eventStream.publish(Message(message))
     }
   }
 

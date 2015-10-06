@@ -11,9 +11,9 @@ object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
     val streamer = Akka.system.actorOf(Props[Streamer], name = "streamer")
+    val context = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(10))
 
-    val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(10))
-    Akka.system.scheduler.schedule(1 seconds, 2 seconds, streamer, "tick")(ec)
+    Akka.system.scheduler.schedule(1 seconds, 2 seconds, streamer, "tick")(context)
     Logger.info("Akka scheduler started")
   }
 
