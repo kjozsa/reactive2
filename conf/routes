@@ -3,11 +3,9 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-GET     /boo/:stuff                 controllers.Endpoints.boo(stuff)
-GET     /wstest                     controllers.Endpoints.wstest
-GET     /wsocket                    controllers.Endpoints.wsocket
+GET        /                    controllers.Application.index
+GET        /wsocket             controllers.Application.wsocket
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET        /assets/*file        controllers.Assets.at(path="/public", file)
 

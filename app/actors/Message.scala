@@ -1,5 +1,3 @@
 package actors
 
-case class Message(content: Any) {
-
-}
+case class Message(content: Any)

@@ -1,7 +1,26 @@
-@(message: String)
+@()(implicit request: RequestHeader)
 
-@main("Welcome to Play") {
+@main {
+    <div id="output"></div>
 
-    @play20.welcome(message)
+    <script>
+            var output;
+            function init() {
+                output = document.getElementById("output");
+                testWebSocket();
+            }
+            function testWebSocket() {
+                websocket = new WebSocket("@routes.Application.wsocket.webSocketURL()");
+
+                websocket.onopen = function(evt) {
+                    alert("connected to websocket");
+                }
+
+                websocket.onmessage = function(evt) {
+                    output.innerHTML = evt.data;
+                }
+            }
+            init();
+    </script>
 
 }
