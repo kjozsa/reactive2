@@ -1,6 +1,6 @@
 package actors
 
-import akka.actor.{ActorLogging, Actor, Props, ActorRef}
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 
 class WSProxy(out: ActorRef) extends Actor with ActorLogging {
 
@@ -8,8 +8,8 @@ class WSProxy(out: ActorRef) extends Actor with ActorLogging {
   context.system.eventStream.subscribe(self, classOf[Message])
 
   def receive = {
-    case Message(content) => {
-      out ! content
+    case message: Message => {
+      out ! message.toJson.toString
     }
 
     case s => log.info(s"received: $s")

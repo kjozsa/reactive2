@@ -26,11 +26,12 @@
         <div class="page-header">
             <h1>Watch the sample stream here</h1>
         </div>
-        <p class="lead" id="output"></p>
+        <div id="replaceDiv"></div>
     </div>
 
 
     <script>
+            var messages = [];
             function init() {
                 var websocket = new WebSocket("@routes.Application.wsocket.webSocketURL()");
 
@@ -39,9 +40,13 @@
 //                }
 
                 websocket.onmessage = function(evt) {
-                    $('#output').text(evt.data);
+                    var data = JSON.parse(evt.data)
+                    messages.push("<p><b>"+data.user+":</b> "+data.content+"</p>");
+                    if (messages.length > 20) messages.shift();
+                    $('#replaceDiv').html(messages);
                 }
             }
             init();
     </script>
+
 }

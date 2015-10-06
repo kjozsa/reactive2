@@ -11,11 +11,11 @@ class Streamer extends Actor with ActorLogging {
 
   stream.addListener(new StatusAdapter {
     override def onStatus(status: Status): Unit = {
-      context.system.eventStream.publish(Message(status.getText))
+      context.system.eventStream.publish(Message(status.getUser.getScreenName, status.getText))
     }
   })
 
-  stream.filter(new FilterQuery().language("en").track("cute"))
+  stream.filter(new FilterQuery().language("en").track("linux"))
 
   def receive = {
     case _ =>
