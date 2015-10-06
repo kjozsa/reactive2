@@ -12,9 +12,9 @@
             function testWebSocket() {
                 websocket = new WebSocket("@routes.Application.wsocket.webSocketURL()");
 
-                websocket.onopen = function(evt) {
-                    alert("connected to websocket");
-                }
+//                websocket.onopen = function(evt) {
+//                    alert("connected to websocket");
+//                }
 
                 websocket.onmessage = function(evt) {
                     output.innerHTML = evt.data;

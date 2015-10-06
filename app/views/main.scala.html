@@ -4,12 +4,28 @@
 
 <html>
     <head>
+        <meta name="generator" content="HTML Tidy, see www.w3.org">
+        <meta charset="utf-8">
+
         <title>WebSocket test</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        @*<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">*@
+        @*<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">*@
+        @*<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>*@
     </head>
     <body>
+
+        <nav class="navbar navbar-default navbar-inverse">
+            <div class="navbar-brand">Lift Experiments</div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="lift:Menu.builder?ul:class=nav+navbar-nav&li_item:class=active&linkToSelf=true"/>
+            </div>
+        </nav>
+
         @content
     </body>
 </html>
