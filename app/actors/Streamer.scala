@@ -6,7 +6,6 @@ import twitter4j._
 class Streamer extends Actor with ActorLogging {
 
   System.setProperty("twitter4j.loggerFactory", "twitter4j.NullLoggerFactory")
-
   val twitter = TwitterFactory.getSingleton()
   val stream = new TwitterStreamFactory(twitter.getConfiguration).getInstance()
 
@@ -16,8 +15,7 @@ class Streamer extends Actor with ActorLogging {
     }
   })
 
-  //  stream.sample()
-  stream.filter(new FilterQuery().language("en").track("smart"))
+  stream.filter(new FilterQuery().language("en").track("cute"))
 
   def receive = {
     case _ =>

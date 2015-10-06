@@ -1,26 +1,47 @@
 @()(implicit request: RequestHeader)
 
 @main {
-    <div id="output"></div>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Websocket Example</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+        <!-- Begin page content -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Watch the sample stream here</h1>
+        </div>
+        <p class="lead" id="output"></p>
+    </div>
+
 
     <script>
-            var output;
             function init() {
-                output = document.getElementById("output");
-                testWebSocket();
-            }
-            function testWebSocket() {
-                websocket = new WebSocket("@routes.Application.wsocket.webSocketURL()");
+                var websocket = new WebSocket("@routes.Application.wsocket.webSocketURL()");
 
 //                websocket.onopen = function(evt) {
 //                    alert("connected to websocket");
 //                }
 
                 websocket.onmessage = function(evt) {
-                    output.innerHTML = evt.data;
+                    $('#output').text(evt.data);
                 }
             }
             init();
     </script>
-
 }
