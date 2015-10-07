@@ -14,5 +14,6 @@ dist
 /RUNNING_PID
 /.settings
 twitter4j.properties
-
+gatling/reports
     
+project/typesafe.properties

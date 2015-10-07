@@ -15,7 +15,7 @@ class Streamer extends Actor with ActorLogging {
     }
   })
 
-  stream.filter(new FilterQuery().language("en").track("scala", "akka", "typesafe", "linux", "docker"))
+  stream.filter(new FilterQuery().language("en").track("scala", "akka", "typesafe", "linux", "cute"))
 
   def receive = {
     case _ =>
