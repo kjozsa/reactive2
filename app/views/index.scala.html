@@ -45,6 +45,10 @@
                     if (messages.length > 20) messages.shift();
                     $('#replaceDiv').html(messages);
                 }
+
+                websocket.onclose = function(evt) {
+                    setTimeout(function() { init(); }, 5000);
+                }
             }
             init();
     </script>
