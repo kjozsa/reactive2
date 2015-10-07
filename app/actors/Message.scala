@@ -1,10 +1,22 @@
 package actors
 
-import play.api.libs.json.{Json, JsObject}
+import play.api.libs.json.{JsObject, Json}
 
-case class Message(user: String, content: String) {
-  def toJson: JsObject = Json.obj(
+sealed trait Message {
+  def toJson: JsObject
+}
+
+case class StatusUpdate(user: String, content: String) extends Message {
+  override def toJson = Json.obj(
+    "type" -> "status",
     "user" -> user,
     "content" -> content
+  )
+}
+
+case class ClientsUpdate(clients: Int) extends Message {
+  override def toJson = Json.obj(
+    "type" -> "stats",
+    "clients" -> clients
   )
 }

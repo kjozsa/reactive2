@@ -11,7 +11,7 @@ class Streamer extends Actor with ActorLogging {
 
   stream.addListener(new StatusAdapter {
     override def onStatus(status: Status): Unit = {
-      context.system.eventStream.publish(Message(status.getUser.getScreenName, status.getText))
+      context.system.eventStream.publish(StatusUpdate(status.getUser.getScreenName, status.getText))
     }
   })
 
@@ -22,6 +22,7 @@ class Streamer extends Actor with ActorLogging {
   }
 
   override def postStop(): Unit = {
+    log.info("shutting down twitter stream")
     stream.shutdown()
   }
 }

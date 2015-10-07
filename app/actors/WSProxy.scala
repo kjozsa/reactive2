@@ -2,10 +2,10 @@ package actors
 
 import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 
-class WSProxy(out: ActorRef) extends Actor with ActorLogging {
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 
-  log.info("subcribed to event stream")
-  context.system.eventStream.subscribe(self, classOf[Message])
+class WSProxy(out: ActorRef) extends Actor with ActorLogging {
 
   def receive = {
     case message: Message => {
@@ -15,10 +15,19 @@ class WSProxy(out: ActorRef) extends Actor with ActorLogging {
     case s => log.info(s"received: $s")
   }
 
-  override def postStop() = {
-    log.info("unsubcribed from event stream")
-    context.system.eventStream.unsubscribe(self)
+  override def preStart() = {
+    context.system.eventStream.subscribe(self, classOf[Message])
+    statsActor.map(_ ! Stats.Joined)
+    log.info("subcribed to event stream")
   }
+
+  override def postStop() = {
+    context.system.eventStream.unsubscribe(self)
+    statsActor.map(_ ! Stats.Left)
+    log.info("unsubscribed from event stream")
+  }
+
+  def statsActor = context.actorSelection("akka://application/user/stats").resolveOne(1 seconds)
 }
 
 object WSProxy {

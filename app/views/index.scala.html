@@ -41,7 +41,11 @@
 
                 websocket.onmessage = function(evt) {
                     var data = JSON.parse(evt.data)
-                    messages.push("<p><b>"+data.user+":</b> "+data.content+"</p>");
+                    if (data.type == "status") {
+                        messages.push("<p><b>"+data.user+":</b> "+data.content+"</p>");
+                    } else {
+                        messages.push("<p><b>######"+data.clients+"</b></p>")
+                    }
                     if (messages.length > 20) messages.shift();
                     $('#replaceDiv').html(messages);
                 }
