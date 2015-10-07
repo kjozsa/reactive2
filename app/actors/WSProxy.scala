@@ -17,13 +17,13 @@ class WSProxy(out: ActorRef) extends Actor with ActorLogging {
 
   override def preStart() = {
     context.system.eventStream.subscribe(self, classOf[Message])
-    statsActor.map(_ ! Stats.Joined)
+    statsActor.map(_ ! ClientsTracker.Joined)
     log.info("subcribed to event stream")
   }
 
   override def postStop() = {
     context.system.eventStream.unsubscribe(self)
-    statsActor.map(_ ! Stats.Left)
+    statsActor.map(_ ! ClientsTracker.Left)
     log.info("unsubscribed from event stream")
   }
 

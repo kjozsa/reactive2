@@ -1,37 +1,22 @@
 @()(implicit request: RequestHeader)
 
-@main {
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Websocket Example</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
-
-        <!-- Begin page content -->
+@template {
     <div class="container">
         <div class="page-header">
-            <h1>Watch the sample stream here</h1>
+            <h1>Sampling Twitter stream over WebSocket</h1>
         </div>
-        <div id="replaceDiv"></div>
+        <div id="replaceDiv" class="lead"></div>
     </div>
 
+    <footer class="footer">
+        <div class="bg-primary">
+            <p class="text-center lead" id="replaceClients"></p>
+        </div>
+    </footer>
 
     <script>
             var messages = [];
+
             function init() {
                 var websocket = new WebSocket("@routes.Application.wsocket.webSocketURL()");
 
@@ -39,22 +24,33 @@
 //                    alert("connected to websocket");
 //                }
 
-                websocket.onmessage = function(evt) {
+                websocket.onmessage = function (evt) {
                     var data = JSON.parse(evt.data)
-                    if (data.type == "status") {
-                        messages.push("<p><b>"+data.user+":</b> "+data.content+"</p>");
-                    } else {
-                        messages.push("<p><b>######"+data.clients+"</b></p>")
+
+                    switch (data.type) {
+                        case "status":
+                            messages.push("<p><b>&lt;" + data.user + "&gt;</b> " + linkifyStr(data.content) + "</p>");
+                            if (messages.length > 10) messages.shift();
+                            $('#replaceDiv').html(messages);
+                            break;
+
+                        case "clients":
+                            var msg = data.clients == 1 ? " client online" : " clients online";
+                            $('#replaceClients').text(data.clients + msg);
+                            break;
                     }
-                    if (messages.length > 20) messages.shift();
-                    $('#replaceDiv').html(messages);
                 }
 
-                websocket.onclose = function(evt) {
-                    setTimeout(function() { init(); }, 5000);
+                websocket.onclose = function (evt) {
+                    setTimeout(function () {
+                        init();
+                    }, 5000);
                 }
             }
             init();
+
     </script>
 
+    <script src="@routes.Assets.at("javascripts/linkify.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/linkify-string.min.js")"></script>
 }

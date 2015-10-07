@@ -16,7 +16,7 @@ case class StatusUpdate(user: String, content: String) extends Message {
 
 case class ClientsUpdate(clients: Int) extends Message {
   override def toJson = Json.obj(
-    "type" -> "stats",
+    "type" -> "clients",
     "clients" -> clients
   )
 }

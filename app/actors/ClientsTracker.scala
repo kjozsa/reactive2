@@ -2,13 +2,13 @@ package actors
 
 import java.util.concurrent.Executors
 
-import actors.Stats._
+import actors.ClientsTracker._
 import akka.actor.{Actor, ActorLogging}
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
-class Stats extends Actor with ActorLogging {
+class ClientsTracker extends Actor with ActorLogging {
   private var clients = 0
 
   val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(1))
@@ -21,7 +21,7 @@ class Stats extends Actor with ActorLogging {
   }
 }
 
-object Stats {
+object ClientsTracker {
   case object Joined
   case object Left
   case object PublishStats
