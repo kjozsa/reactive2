@@ -16,7 +16,7 @@ class LoadTest extends Simulation {
   val scn = scenario("loadtest")
     .exec(http("Home").get("/"))
     .exec(ws("Connect WS").open("/wsocket"))
-    .pause(90 seconds)
+    .pause(30 minutes)
     .exec(ws("Close WS").close)
 //    .pause(1 second)
 //    .exec(ws("Reconciliate states").reconciliate)
@@ -24,7 +24,7 @@ class LoadTest extends Simulation {
 
   setUp(
     scn.inject(
-      rampUsers(8000) over (60 seconds)
+      rampUsers(2000) over (60 seconds)
     )
   ).protocols(httpConf)
 }

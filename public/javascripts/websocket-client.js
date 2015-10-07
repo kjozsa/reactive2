@@ -1,32 +1,31 @@
-var messages = [];
+function startWebSocket(endpoint) {
+    var messages = [];
+    var websocket = new WebSocket(endpoint);
 
-function init() {
-    var websocket = new WebSocket("@routes.Application.wsocket.webSocketURL()");
-
-//                websocket.onopen = function(evt) {
-//                    alert("connected to websocket");
-//                }
+    //websocket.onopen = function (evt) {
+    //    alert("connected to websocket");
+    //}
 
     websocket.onmessage = function (evt) {
         var data = JSON.parse(evt.data)
 
         switch (data.type) {
             case "status":
-                messages.push("<p><b>" + data.user + ":</b> " + linkifyStr(data.content) + "</p>");
-                if (messages.length > 8) messages.shift();
+                messages.push("<p><b>&lt;" + data.user + "&gt;</b> " + linkifyStr(data.content) + "</p>");
+                if (messages.length > 10) messages.shift();
                 $('#replaceDiv').html(messages);
                 break;
 
             case "clients":
-                $('#replaceClients').text(data.clients + " clients online");
+                var msg = data.clients == 1 ? " client online" : " clients online";
+                $('#replaceClients').text(data.clients + msg);
                 break;
         }
     }
 
     websocket.onclose = function (evt) {
         setTimeout(function () {
-            init();
+            startWebSocket(endpoint);
         }, 5000);
     }
 }
-init();
