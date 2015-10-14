@@ -6,8 +6,8 @@ import play.libs.Akka
 object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
-    val stats = Akka.system.actorOf(Props[ClientsTracker], name = "stats")
     val streamer = Akka.system.actorOf(Props[Streamer], name = "streamer")
+    val stats = Akka.system.actorOf(Props[ClientsTracker], name = "stats")
   }
 
 }
