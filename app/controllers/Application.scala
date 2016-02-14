@@ -3,7 +3,7 @@ package controllers
 import actors.WSProxy
 import play.api.mvc._
 
-object Application extends Controller {
+class Application extends Controller {
 
   import play.api.Play.current
 
